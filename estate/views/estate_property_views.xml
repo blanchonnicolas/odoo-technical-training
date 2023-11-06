@@ -1,0 +1,86 @@
+<odoo>
+    <!-- Estate Property List/Tree views -->
+    <!-- Contains the list/tree view in the estate_property model, and it defines columns that appear on the frontend -->
+    <record id="estate_property_view_tree" model="ir.ui.view">
+        <field name="name">estate_property.tree</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="garden"/>
+                <field name="date_availability"/>                
+            </tree>
+        </field>
+    </record>
+    <!-- Estate Property entry views -->
+    <!-- Contains the form entry view in estate_property model, and it defines groups and notebooks appearance/display on frontend -->
+    <record id="estate_property_view_form" model="ir.ui.view">
+        <field name="name">estate_property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <sheet>
+                     <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="postcode"/>
+                            <field name="date_availability"/> 
+                            <field name="expected_price"/>
+                            <field name="selling_price"/>
+                            <field name="state"/>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facades"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="garden_area"/>
+                                <field name="garden_orientation"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Estate Property Search views -->
+    <!-- Filter-on in a customized search view - filters views are then prepared for direct usage -->
+    <record id="crm_recurring_plan_view_search" model="ir.ui.view">
+        <field name="name">estate_property.view.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="garden"/>
+                <field name="date_availability"/> 
+                <separator/>
+                <filter string="Archived" name="filter_inactive" domain="[('active', '=', False)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Garage" name="group_by_garage" context="{'group_by':'garage'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Estate Property Action Menu -->
+    <!-- Contains action ; View in tree or Form (Chapter 6) -->
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
