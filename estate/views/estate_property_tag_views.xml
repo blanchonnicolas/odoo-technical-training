@@ -1,0 +1,43 @@
+<odoo>
+    <!-- Estate Property Tag List/Tree views -->
+    <!-- Contains the list/tree view in the estate_propert_tag model, and it defines columns that appear on the frontend -->
+    <record id="estate_property_tag_view_tree" model="ir.ui.view">
+        <field name="name">estate_property_tag.tree</field>
+        <field name="model">estate.property.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="name"/>            
+            </tree>
+        </field>
+    </record>
+    <!-- Estate Property Tag entry views -->
+    <!-- Contains the form entry view in estate_property_tag model, and it defines groups and notebooks appearance/display on frontend -->
+    <record id="estate_property_tag_view_form" model="ir.ui.view">
+        <field name="name">estate_property_tag.form</field>
+        <field name="model">estate.property.tag</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <sheet>
+                     <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Estate Property Tag Action Menu -->
+    <!-- Contains action ; View in tree or Form (Chapter 6) -->
+    <record id="estate_property_tag_action" model="ir.actions.act_window">
+        <field name="name">Property Tags</field>
+        <field name="res_model">estate.property.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

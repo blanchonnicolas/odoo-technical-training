@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models #Inherit from global "models" library from odoo
+from odoo import api, fields, models, exceptions #Inherit from global "models" library from odoo
+# api package used for computational functions
+from odoo.exceptions import UserError
 from dateutil.relativedelta import relativedelta
+
 
 #Here, class EstateProperty is created directly in main folder. 
 # However, it is recommended to use folder tree arborescence to ease navigation (and inheritance)
@@ -38,7 +41,55 @@ class EstateProperty(models.Model):
     active = fields.Boolean(default=True)
     state = fields.Selection(
         string='State',
-        selection=[('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'), ('canceled', 'Canceled')],
+        selection=[('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'), ('cancelled', 'Cancelled')],
         required=True,
         copy=False,
         default='new')
+
+    # -------------------------------------------------------------------------
+    # RELATION BETWEEN MODELS
+    # -------------------------------------------------------------------------
+    property_type_id = fields.Many2one("estate.property.type", string="Property Types")
+    salesperson_id = fields.Many2one('res.users', string='Salesperson', index=True, default=lambda self: self.env.user)
+    buyer_id = fields.Many2one('res.partner', string='Buyer', index=True, copy=False)
+
+    tag_ids = fields.Many2many("estate.property.tag", string="Property Tags")
+
+    offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offer Ids") #Asking the offer model, to fetch all property_id in offer_ids field. This offer_ids field will then be used in estate_property_views, using tree
+    
+    # -------------------------------------------------------------------------
+    # COMPUTE METHODS
+    # -------------------------------------------------------------------------
+
+    total_area = fields.Integer(string='Total Area surface (sqm)', 
+        compute='_compute_total_area',
+        help="Computed field from Garden + Living areas")
+    
+    @api.depends('living_area', 'garden_area')
+    def _compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
+
+    
+    best_offer = fields.Float(string='Maximum Price offer',
+        compute='_compute_max_price')
+    
+    @api.depends('offer_ids.price')
+    def _compute_max_price(self):
+        for record in self:
+            if record.offer_ids:
+                record.best_offer = max(record.offer_ids.mapped('price'))
+            else:
+                record.best_offer = 0
+
+    # -------------------------------------------------------------------------
+    # DELETE METHOD THAT REJECT DELETING WHEN STATE IS NOT ...
+    # -------------------------------------------------------------------------
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_state_is_new_or_cancelled(self):
+        for record in self:
+            if record.state not in ['new','cancelled']:
+                raise UserError("Can't delete if state is not New or Cancelled !")
+
+
+        
