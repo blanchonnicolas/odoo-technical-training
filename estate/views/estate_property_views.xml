@@ -25,6 +25,10 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Estate property main entries">
+                <header>
+                    <button name="action_sold" type="object" string="Sold" state="cancelled"/>
+                    <button name="action_cancel" type="object" string="Cancel" state="sold"/>
+                </header>
                 <sheet>
                      <group>
                         <group>
@@ -64,6 +68,8 @@
                                         <field name="partner_id"/>  
                                         <field name="validity"/>  
                                         <field name="date_deadline"/>  
+                                        <button name="action_accept" type="object" string="Accept" state="offer_received" icon="fa-check"/>
+                                        <button name="action_refuse" type="object" string="Refuse" state="offer_received" icon="fa-times"/>
                                         <field name="status"/>  
                                     </tree>
                                 </field>

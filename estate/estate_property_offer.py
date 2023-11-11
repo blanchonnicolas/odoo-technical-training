@@ -57,3 +57,23 @@ class EstatePropertyOffer(models.Model):
                     raise UserError("Your offer cannot be considered as it is lower than an existing one")
         return super().create(vals_list)
 
+
+    # -------------------------------------------------------------------------
+    # ACTION METHODS THAT ENSURE THAT trigger offer state update with accept/reject buttons ...
+    # -------------------------------------------------------------------------
+    def action_accept(self):
+        if "accepted" in self.mapped("property_id.offer_ids.status"):  #BUG HERE TO FIX : Do not retrieve property_id.offer_ids.state
+            raise UserError("An offer for this property has already been accepted")
+        return self.write(
+            {
+                "status": "accepted",
+            }
+        )
+
+    def action_refuse(self):
+        return self.write(
+            {
+                "status": "refused",
+            }
+        )
+

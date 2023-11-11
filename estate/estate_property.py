@@ -91,5 +91,19 @@ class EstateProperty(models.Model):
             if record.state not in ['new','cancelled']:
                 raise UserError("Can't delete if state is not New or Cancelled !")
 
+    # -------------------------------------------------------------------------
+    # ACTION METHODS THAT ENSURE THAT canceled property cannot be set as sold, and a sold property cannot be canceled ...
+    # -------------------------------------------------------------------------
+    def action_sold(self):
+        if "offer_accepted" in self.mapped("state"):
+            raise UserError("Canceled properties cannot be sold.")
+        return True
 
-        
+    def action_cancel(self):
+        if "sold" in self.mapped("state"):
+            raise UserError("Sold properties cannot be canceled.")
+        return True
+
+
+
+

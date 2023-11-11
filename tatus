@@ -1,0 +1,23 @@
+[33mcommit fe8aac0c0459d006409d1d25e014df35a135c4cb[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: blanchonnicolas <blanchonnicolas@gmail.com>
+Date:   Tue Nov 7 15:31:53 2023 +0000
+
+    Day2 commit of OdooExperience2023 SmartClass Intro to Development - Chapter 13 in-progress
+
+[33mcommit 3270d42befa142f5074d9540c61f7edb5f9dbb88[m
+Author: blanchonnicolas <blanchonnicolas@gmail.com>
+Date:   Mon Nov 6 16:10:41 2023 +0000
+
+    Day1 commit of OdooExperience2023 SmartClass Intro to Development - Stopped at Chapter7
+
+[33mcommit 578312170618aefb1dd8e7afe423da9de29997af[m
+Author: Nicolas Martinelli <nim@odoo.com>
+Date:   Mon Sep 10 13:56:35 2018 +0200
+
+    Add link to Technical Training for Odoo 16.0
+
+[33mcommit 08ce5cf0775e0a4bcb666a1d6a75f3aa2b0f35bc[m
+Author: Martin Trigaux <mat@odoo.com>
+Date:   Wed Jul 13 14:00:48 2016 +0200
+
+    Basic folder structure
