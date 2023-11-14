@@ -11,7 +11,7 @@ class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer" # Dot characters are replaced by Underscore when table is created by ORM
     _description = "Property offer Table listing buyer offers to the seller with proposed  price and decisions"
     
-    price = fields.Float('Offer price')
+    price = fields.Float('Offer price', required=True)
     status = fields.Selection(
         string='Offer status',
         copy=False,
@@ -62,18 +62,24 @@ class EstatePropertyOffer(models.Model):
     # ACTION METHODS THAT ENSURE THAT trigger offer state update with accept/reject buttons ...
     # -------------------------------------------------------------------------
     def action_accept(self):
-        if "accepted" in self.mapped("property_id.offer_ids.status"):  #BUG HERE TO FIX : Do not retrieve property_id.offer_ids.state
+        if "accepted" in self.mapped("property_id.offer_ids.status"):  
             raise UserError("An offer for this property has already been accepted")
-        return self.write(
+        self.write(
             {
                 "status": "accepted",
             }
         )
+        return self.mapped("property_id").write(
+            {
+                "state": "offer_accepted",
+                "selling_price": self.price,
+                "buyer_id": self.partner_id.id,
+            }
+        )
 
     def action_refuse(self):
-        return self.write(
+        self.write(
             {
                 "status": "refused",
             }
         )
-

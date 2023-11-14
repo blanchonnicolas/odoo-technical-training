@@ -105,5 +105,3 @@ class EstateProperty(models.Model):
         return True
 
 
-
-
