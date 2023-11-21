@@ -7,5 +7,6 @@ from odoo import fields, models #Inherit from global "models" library from odoo
 class EstatePropertyTag(models.Model):
     _name = "estate.property.tag" # Dot characters are replaced by Underscore when table is created by ORM
     _description = "Property Tag Table giving information on estate characteristics, for example, cozy or renovated"
+    _order = "name" #Sort the entries following name (alphabetically)
     
     name = fields.Char('Name', required=True, translate=True)

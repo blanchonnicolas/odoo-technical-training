@@ -104,6 +104,18 @@ Note: Warning dûe à l'allocation des droits ma,nquante
 1. Types d'actions : Ajout des boutons dans la view, trigger des méthodes (Business logic et conditions d'affectations)
 2. Liens entre Actions et Bouton : Non exploré
 
+[Chapter_11](https://www.odoo.com/documentation/master/developer/tutorials/getting_started/11_constraints.html#chapter-11-constraints): Contraintes (SQL et Vérifications codées en Python)
+1. SQL : Vérification sur Float, gestion des valeurs uniques
+2. Python : Limitation des valeurs de champs, Comparaison et contraintes sur l'utilisation des objets business
+
+[Chapter_12](https://www.odoo.com/documentation/master/developer/tutorials/getting_started/12_sprinkles.html#chapter-12-add-the-sprinkles): Customisation des vues
+1. Views : Liste des propriétés accessible directement depuis le model "Propertiy_type"
+2. Widgets : Ajout d'un widget dans la form view, représentant un wokflow de statut de la propriété
+3. List Order : Trier l'affichager des objets, en fonction de l'id, du nom, de la valeur d'un champ
+4. Attributs et Options : 
+5. Stat buttons :
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

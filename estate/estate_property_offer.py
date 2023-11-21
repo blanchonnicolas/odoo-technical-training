@@ -10,11 +10,13 @@ from dateutil.relativedelta import relativedelta
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer" # Dot characters are replaced by Underscore when table is created by ORM
     _description = "Property offer Table listing buyer offers to the seller with proposed  price and decisions"
+    _order = "price desc" #Sort the entries following price. Highest comes first
     
     price = fields.Float('Offer price', required=True)
     status = fields.Selection(
         string='Offer status',
         copy=False,
+        default=False,
         selection=[('accepted', 'Accepted'), ('refused', 'Refused')],
         help="Decision following offer")
     partner_id = fields.Many2one('res.partner', required=True)

@@ -26,8 +26,9 @@
         <field name="arch" type="xml">
             <form string="Estate property main entries">
                 <header>
-                    <button name="action_sold" type="object" string="Sold" state="cancelled"/>
-                    <button name="action_cancel" type="object" string="Cancel" state="sold"/>
+                    <button name="action_sold" type="object" string="Sold" state="offer_accepted" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel" state="new,offer_received,offer_accepted" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                 </header>
                 <sheet>
                      <group>
@@ -37,7 +38,6 @@
                         <group>
                             <field name="postcode"/>
                             <field name="date_availability"/> 
-                            <field name="state"/>
                             <field name="tag_ids" widget="many2many_tags"/>
                             <field name="expected_price"/>
                             <field name="best_offer"/>

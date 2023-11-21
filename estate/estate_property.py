@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, exceptions #Inherit from global "models" library from odoo
 # api package used for computational functions
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare, float_is_zero
 from dateutil.relativedelta import relativedelta
 
 
@@ -11,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 class EstateProperty(models.Model):
     _name = "estate.property" # Dot characters are replaced by Underscore when table is created by ORM
     _description = "Property Table associated to Estate application"
+    _order = "id desc" #Sort the entries following id. Last entered comes first
 
     #With no specification, the table "estate_property" is created with following fields : 
         # id (Id) :    The unique identifier for a record of the model.
@@ -92,16 +94,27 @@ class EstateProperty(models.Model):
                 raise UserError("Can't delete if state is not New or Cancelled !")
 
     # -------------------------------------------------------------------------
-    # ACTION METHODS THAT ENSURE THAT canceled property cannot be set as sold, and a sold property cannot be canceled ...
+    # ACTION METHODS THAT ENSURE THAT cancelled property cannot be set as sold, and a sold property cannot be cancelled...
     # -------------------------------------------------------------------------
     def action_sold(self):
-        if "offer_accepted" in self.mapped("state"):
-            raise UserError("Canceled properties cannot be sold.")
-        return True
+        if "cancelled" in self.mapped("state"):
+            raise UserError("Cancelled properties cannot be sold.")
+        return self.write({"state": "sold"})
 
     def action_cancel(self):
         if "sold" in self.mapped("state"):
-            raise UserError("Sold properties cannot be canceled.")
-        return True
+            raise UserError("Sold properties cannot be cancelled.")
+        return self.write({"state": "cancelled"})
 
-
+    # -------------------------------------------------------------------------
+    # ACTION METHODS THAT ENSURE THAT selling_price is greater than 90% of the expected_price ...
+    # -------------------------------------------------------------------------
+    @api.constrains("expected_price", "selling_price")
+    def _check_selling_price_range(self):
+        for record in self:
+            if float_is_zero(record.selling_price, precision_rounding=0.01) or float_is_zero(record.expected_price, precision_rounding=0.01):
+                pass
+            elif float_compare(record.selling_price, record.expected_price * 0.9, precision_rounding=0.01) < 0:
+                raise ValidationError(
+                    "The selling price cannot be lower than 90% of the expected price! "
+                )

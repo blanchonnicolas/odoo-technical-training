@@ -27,6 +27,15 @@
                         <notebook>
                             <page string="Description">
                             </page>
+                            <page string="List of properties">
+                                <field name="property_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="expected_price"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
                         </notebook>
                     </group>
                 </sheet>
