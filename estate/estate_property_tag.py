@@ -10,3 +10,4 @@ class EstatePropertyTag(models.Model):
     _order = "name" #Sort the entries following name (alphabetically)
     
     name = fields.Char('Name', required=True, translate=True)
+    color = fields.Integer("Color Index")

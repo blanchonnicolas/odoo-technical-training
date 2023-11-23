@@ -5,8 +5,9 @@
         <field name="name">estate_property_type.tree</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
-                <field name="name"/>            
+            <tree string="Property Type">
+                <field name="name"/>  
+                <field name="sequence" widget="handle"/>
             </tree>
         </field>
     </record>
@@ -16,7 +17,7 @@
         <field name="name">estate_property_type.form</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
-            <form string="Lost Reason">
+            <form string="Property Type">
                 <sheet>
                      <group>
                         <group>
