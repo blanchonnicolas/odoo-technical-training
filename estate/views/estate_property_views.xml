@@ -5,7 +5,7 @@
         <field name="name">estate_property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-success="state in ('offer_received', 'offer_accepted')" decoration-bf="state == 'offer_accepted'" decoration-muted="state == 'sold'">
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="property_type_id"/>
@@ -15,7 +15,7 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="garden"/>
-                <field name="date_availability"/>
+                <field name="date_availability" optional="hide"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -64,8 +64,8 @@
                                 </group>
                             </page>
                             <page string="Offers">
-                                <field name="offer_ids">
-                                    <tree>
+                                <field name="offer_ids" readonly="state in ['offer_accepted','sold', 'cancelled']">
+                                    <tree editable="bottom" decoration-danger="status == 'refused'" decoration-success="status == 'accepted'">
                                         <field name="price"/>    
                                         <field name="partner_id"/>  
                                         <field name="validity"/>  
@@ -99,12 +99,13 @@
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
-                <field name="living_area"/>
+                <field name="living_area" filter_domain="[('living_area', '>=', self)]"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="garden"/>
                 <field name="date_availability"/> 
                 <field name="property_type_id"/>
+                <filter string="Available" name="available" domain="[('state', 'in', ('new', 'offer_received'))]"/>
                 <separator/>
                 <filter string="Archived" name="filter_inactive" domain="[('active', '=', False)]"/>
                 <group expand="1" string="Group By">
@@ -119,5 +120,6 @@
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_available': 1}</field>
     </record>
 </odoo>

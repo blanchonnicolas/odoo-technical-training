@@ -12,5 +12,8 @@ class EstatePropertyType(models.Model):
     # -----------Chapitre 12: Inline views - Display the list of properties linked to a property type    
     property_ids = fields.One2many("estate.property", "property_type_id", string="List of properties")
 
+    # -----------Chapitre 12: Stat button - Compute all offer_ids !NOT COMPLETED the compute function!
+    
+
     name = fields.Char('Name', required=True, translate=True)
     sequence = fields.Integer('Sequence', default=1, help="Used to order property type Most used comes first")

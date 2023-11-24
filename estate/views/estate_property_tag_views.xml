@@ -16,7 +16,7 @@
         <field name="name">estate_property_tag.form</field>
         <field name="model">estate.property.tag</field>
         <field name="arch" type="xml">
-            <form string="Property Tag">
+            <form string="Property Tag" editable="top">
                 <sheet>
                      <group>
                         <group>
