@@ -112,7 +112,7 @@ Note: Warning dûe à l'allocation des droits ma,nquante
 1. Views : Liste des propriétés accessible directement depuis le model "Propertiy_type"
 2. Widgets : Ajout d'un widget dans la form view, représentant un wokflow de statut de la propriété
 3. List Order : Trier l'affichager des objets, en fonction de l'id, du nom, de la valeur d'un champ
-4. Attributes et Options: Attributes seem not to be working with Odoo 17. Also, "editable" option in tree view seems to not respond. decoration-bf is not responding.
+4. Attributes et Options: Certains attributs de décorations semblent ne pas fonctionner : decoration-bf (A poursuivre)
 5. Stat buttons : NOT completed
 
 
